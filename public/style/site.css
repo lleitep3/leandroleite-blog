@@ -1,0 +1,92 @@
+/* 
+    Document   : site
+    Created on : Oct 21, 2012, 7:45:21 PM
+    Author     : leandro
+    Description:
+        Purpose of the stylesheet follows.
+*/
+/* CSS GLOBAL */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    display: initial;
+    height: 100%;
+}
+
+body{
+    background-color: #f5f5f5;
+    display: inline-block;
+    height: 99%;
+    
+}
+
+.body{
+    margin-top: 60px;
+    margin-left: 20px;
+    min-height: 90%;
+    position: relative;
+}
+
+footer{
+    position: absolute;
+    width: 98%;
+    height: 60px;
+    bottom: 0px;
+}
+
+footer hr {
+    margin: 15px 0;
+}
+
+body .content{
+    padding-bottom: 60px;
+}
+
+.fontTitle{
+    font-size: medium;
+}
+.small{
+    height: 40px;
+}
+.notPadding > li a{
+    padding: 1px !important;
+}
+.backgroundColorGray{
+    background-color: #EEE;
+}
+.boxSocial{
+    margin: 2px;
+}
+.boxSocial ul{
+    border-radius: 3px;
+}
+/* CSS GLOBAL */
+
+/* Pagina de artigos */
+.boxArtigosPequeno p{
+    font-size: small;
+    line-height: initial;
+}
+
+.boxArtigosPequeno p small span{
+    background-color: #08C;
+    color: #fff;
+    padding: 1px;
+    margin: 0 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.boxArtigosPequeno p small span:hover{
+    background-color: #040404;
+}
+
+.boxArtigosPequeno p small .author{
+    color: #08C;
+    text-decoration: underline;
+}
+/* FIM - Pagina de artigos */
+
