@@ -22,7 +22,7 @@ $router->get('/projetos', function() {
             View::render();
         });
 
-$router->get('/projetos', function() {
+$router->get('/phpinfo', function() {
             phpinfo();
             exit;
         });
