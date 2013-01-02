@@ -37,11 +37,15 @@
 <script src="/script/linkedInNavigator.js"></script>
 <script type="text/javascript">
     $(function(){
-        
         // making LinkedIn Integration to populate personal information
         $.get('/linkedin',function(data){
             var $boxInfo = $('.boxInformation');
             var linkedIn = new linkedInNavigator(data);
+            
+            // making current position html
+            $boxInfo.append(
+            linkedIn.makeHtmlBasicInformation(linkedIn.getBasicInformation())
+        );
             
             // making current position html
             $boxInfo.append(

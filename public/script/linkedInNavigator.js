@@ -7,11 +7,26 @@ function linkedInNavigator(data){
         }
         return skills;
     };
+    linkedInNavigator.prototype.getBasicInformation = function(){
+        return {
+            email : linkedInNavigator.prototype.data.emailAddress,
+            interests : linkedInNavigator.prototype.data.interests
+        };
+    };
     linkedInNavigator.prototype.getCurrentPositions = function(){
         return linkedInNavigator.prototype.data.threeCurrentPositions.values;
     };
     linkedInNavigator.prototype.getPastPositions = function(){
         return linkedInNavigator.prototype.data.threePastPositions.values;
+    };
+    linkedInNavigator.prototype.makeHtmlBasicInformation = function(info){
+        var html = $('<div/>')
+        .addClass('span10 boxBasicInformation')
+        .append('<h3>Informações Básicas: </h3>')
+        .append('<hr/>');
+        html.append('<p><b>Contato :</b>'+info.email+' </p>');
+        html.append('<p><b>Interesses :</b>'+info.interests+' </p>');
+        return html;
     };
     linkedInNavigator.prototype.makeHtmlSkills = function(skills){
         var html = $('<div/>');

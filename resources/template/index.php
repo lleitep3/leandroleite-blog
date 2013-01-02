@@ -70,7 +70,7 @@
                 </div><!--/span-->
             </div><!--/row-->
 
-            <footer>
+            <footer class="fixed-height">
                 <hr>
                 <p>&copy; Hey Man - lleitep3 since 2012</p>
             </footer>
