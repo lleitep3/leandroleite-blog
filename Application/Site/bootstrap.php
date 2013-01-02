@@ -8,7 +8,7 @@ set_include_path(
 
 require_once realpath(__DIR__ . '/../../Vendor/Respect/Loader.php');
 spl_autoload_register(new Respect\Loader());
-\ProjectTest\Service\View::setTemplatePath(realpath(__DIR__ . '/../../resources/template/'));
+\Site\Service\View::setTemplatePath(realpath(__DIR__ . '/../../resources/template/'));
 $router = new \Respect\Rest\Router();
 
 $path = realpath(__DIR__ . '/../../resources/routes');

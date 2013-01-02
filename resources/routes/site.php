@@ -1,5 +1,5 @@
 <?php
-use ProjectTest\Service\View;
+use Site\Service\View;
 
 $router->get('/', function() {
         View::set('page', 'institucional_home');

@@ -25,7 +25,7 @@ class Linkedin {
 
     protected function loadConfigs() {
         $this->conn->setVersion('1.0');
-        $this->conn->setAuthType(Client::AUTH_TYPE_AUTHORIZATION_BASIC);
+        $this->conn->setAuthType(\OAUTH_AUTH_TYPE_AUTHORIZATION);
     }
 
     protected function loadDefaultConfigs() {

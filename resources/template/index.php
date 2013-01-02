@@ -1,6 +1,4 @@
-<?php
-
- use ProjectTest\Service\View; ?>
+<?php use Site\Service\View; ?>
 <!DOCTYPE html>
 <html>
     <head>

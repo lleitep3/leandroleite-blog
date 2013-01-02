@@ -1,6 +1,6 @@
 <?php
 
-use ProjectTest\Service\Integration\Linkedin;
+use Site\Service\Integration\Linkedin;
 
 $router->get('/linkedin', function() {
         $apiKey = 'vj3oxvlgfpni';
