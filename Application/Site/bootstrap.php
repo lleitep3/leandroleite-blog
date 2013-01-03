@@ -6,6 +6,8 @@ set_include_path(
     realpath(__DIR__ . '/../../Vendor')
 );
 
+define('PATH_CACHE', realpath(__DIR__ . '/../../resources/cache/'));
+
 require_once realpath(__DIR__ . '/../../Vendor/Respect/Loader.php');
 spl_autoload_register(new Respect\Loader());
 \Site\Service\View::setTemplatePath(realpath(__DIR__ . '/../../resources/template/'));

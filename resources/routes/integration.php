@@ -19,10 +19,15 @@ $router->get('/linkedin', function() {
             , 'educations'
             , 'recommendations-received'
         );
-        
-        $linkedin = new Linkedin($apiKey, $apiSecret);
-        $linkedin->setUserToken($userToken, $userSecret);
-        $linkedin->setResources($resources);
-        echo $linkedin->get();
+        try{
+            $linkedin = new Linkedin($apiKey, $apiSecret);
+            $linkedin->setUserToken($userToken, $userSecret);
+            $linkedin->setResources($resources);
+            $json = $linkedin->get();
+            file_put_contents(PATH_CACHE .DIRECTORY_SEPARATOR. 'linkedIn.json', $json);
+            echo $json;
+        }  catch (\Exception $e){
+            echo file_get_contents(PATH_CACHE .DIRECTORY_SEPARATOR. 'linkedIn.json');
+        }
         
     });
