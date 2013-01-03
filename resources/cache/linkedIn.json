@@ -1,0 +1,229 @@
+{
+  "educations": {
+    "_total": 2,
+    "values": [
+      {
+        "degree": "higher education",
+        "endDate": {"year": 2013},
+        "fieldOfStudy": "Sistemas de Informação",
+        "id": 72755112,
+        "schoolName": "Universidade Bandeirante de São Paulo",
+        "startDate": {"year": 2009}
+      },
+      {
+        "degree": "High school",
+        "endDate": {"year": 2008},
+        "fieldOfStudy": "High school",
+        "id": 88445267,
+        "notes": "",
+        "schoolName": "Dom Duarte Leopoldo e Silva",
+        "startDate": {"year": 2005}
+      }
+    ]
+  },
+  "emailAddress": "lleitep3@gmail.com",
+  "interests": "Tecnologia, Desenvolvimento Web, Filosofia, Historia, Sociologia, Corrida, Infra Estrutura,  Gestão do conhecimento.",
+  "publications": {
+    "_total": 1,
+    "values": [{
+      "date": {
+        "month": 11,
+        "year": 2012
+      },
+      "id": 31,
+      "title": "Artigos"
+    }]
+  },
+  "recommendationsReceived": {
+    "_total": 3,
+    "values": [
+      {
+        "id": 34110258,
+        "recommendationText": "Sempre bem humorado, tem conhecimento e paciência para resolver problemas que surgem das mais variadas formas, sempre preocupado com integridade do código, busca sempre fazer seu melhor.",
+        "recommendationType": {"code": "colleague"},
+        "recommender": {
+          "firstName": "André Vitor",
+          "id": "pIdxKfSt-C",
+          "lastName": "Barbosa Cuba de Miranda"
+        }
+      },
+      {
+        "id": 31465945,
+        "recommendationText": "Leandro é um ótimo profissional que já possui um grande conhecimento e vontade de fazer acontecer. Nenhum problema fica sem solução com ele. Possui ótima integridade e paciência além de dar-se muito bem em grupo.",
+        "recommendationType": {"code": "colleague"},
+        "recommender": {
+          "firstName": "Jean",
+          "id": "slGD5MW12N",
+          "lastName": "Nascimento"
+        }
+      },
+      {
+        "id": 28638949,
+        "recommendationText": "Tem grande potencial pra absorver conhecimento. Aprende rápido, tem interesse e entusiasmo pelo trabalho. É comprometido com qualidade e fazer as coisas do jeito certo. Sabe e gosta de trabalhar em equipe.",
+        "recommendationType": {"code": "colleague"},
+        "recommender": {
+          "firstName": "Alexandre",
+          "id": "bosl2gkFj-",
+          "lastName": "Gomes Gaigalas"
+        }
+      }
+    ]
+  },
+  "skills": {
+    "_total": 17,
+    "values": [
+      {
+        "id": 5,
+        "skill": {"name": "HTML"}
+      },
+      {
+        "id": 6,
+        "skill": {"name": "PHP"}
+      },
+      {
+        "id": 7,
+        "skill": {"name": "Advanced CSS"}
+      },
+      {
+        "id": 8,
+        "skill": {"name": "JavaScript"}
+      },
+      {
+        "id": 9,
+        "skill": {"name": "jQuery"}
+      },
+      {
+        "id": 11,
+        "skill": {"name": "CSS3"}
+      },
+      {
+        "id": 12,
+        "skill": {"name": "MySQL"}
+      },
+      {
+        "id": 13,
+        "skill": {"name": "Linux"}
+      },
+      {
+        "id": 14,
+        "skill": {"name": "REST"}
+      },
+      {
+        "id": 15,
+        "skill": {"name": "OOP"}
+      },
+      {
+        "id": 16,
+        "skill": {"name": "Design Patterns"}
+      },
+      {
+        "id": 23,
+        "skill": {"name": "Web Developer"}
+      },
+      {
+        "id": 24,
+        "skill": {"name": "PHP Programmer"}
+      },
+      {
+        "id": 34,
+        "skill": {"name": "SOA"}
+      },
+      {
+        "id": 35,
+        "skill": {"name": "OAuth"}
+      },
+      {
+        "id": 36,
+        "skill": {"name": "Open Source"}
+      },
+      {
+        "id": 37,
+        "skill": {"name": "HTML 5"}
+      }
+    ]
+  },
+  "threeCurrentPositions": {
+    "_total": 1,
+    "values": [{
+      "company": {
+        "id": 411101,
+        "industry": "Information Technology and Services",
+        "name": "Arizona Premedia and Marketing Automation",
+        "size": "201-500 employees",
+        "type": "Privately Held"
+      },
+      "id": 263101479,
+      "isCurrent": true,
+      "startDate": {
+        "month": 3,
+        "year": 2012
+      },
+      "summary": "Desenvolvimento, e implementando soluções em produtos da empresa, visando melhorias e maior performance",
+      "title": "Desenvolvedor PHP"
+    }]
+  },
+  "threePastPositions": {
+    "_total": 3,
+    "values": [
+      {
+        "company": {
+          "id": 1045408,
+          "industry": "Medical Practice",
+          "name": "PGS Medical Statistics",
+          "size": "11-50 employees",
+          "type": "Privately Held"
+        },
+        "endDate": {
+          "month": 2,
+          "year": 2012
+        },
+        "id": 191620670,
+        "isCurrent": false,
+        "startDate": {
+          "month": 6,
+          "year": 2011
+        },
+        "summary": "Análise e desenvolvimento de sistemas para analises clínicas, manutenção de sistemas tanto em back-end como em front-end.",
+        "title": "Web Developer"
+      },
+      {
+        "company": {
+          "id": 411101,
+          "industry": "Information Technology and Services",
+          "name": "Arizona Premedia and Marketing Automation",
+          "type": "Privately Held"
+        },
+        "endDate": {
+          "month": 6,
+          "year": 2011
+        },
+        "id": 187173412,
+        "isCurrent": false,
+        "startDate": {
+          "month": 9,
+          "year": 2010
+        },
+        "summary": "Pesquisando e desenvolvendo novas tecnologias",
+        "title": "Developer and Researcher at Arizona"
+      },
+      {
+        "company": {
+          "industry": "Program Development",
+          "name": "SuperGestão"
+        },
+        "endDate": {
+          "month": 9,
+          "year": 2010
+        },
+        "id": 187171174,
+        "isCurrent": false,
+        "startDate": {
+          "month": 3,
+          "year": 2010
+        },
+        "summary": "Criação de sistemas de intranet, ERP, web sites, e-commerce e portais utilizando as tecnologias PHP, CSS, JQUERY, JS e como banco de dados MYSQL",
+        "title": "Web Developer"
+      }
+    ]
+  }
+}
