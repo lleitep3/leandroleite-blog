@@ -10,30 +10,6 @@
 <div class="row-fluid boxInformation">
 </div><!--/span-->
 
-<style type="text/css">
-    .boxInformation hr{
-        margin: 5px 0;
-    }
-    .boxInformation h3{
-        line-height: 30px;
-    }
-    .boxSkill .skill{
-        float: left;
-        margin: 0.1em;
-    }
-
-    .boxInformation p.period{
-        margin: 0;
-        font-size: 0.8em;
-    }
-    .boxInformation h4.subTitle{
-        font-weight: bold;
-        font-size: 1em;
-        line-height: 15px;
-        margin-top: 0.4em;
-        margin-bottom: 0.4em;
-    }
-</style>
 <script src="/script/linkedInNavigator.js"></script>
 <script type="text/javascript">
     $(function(){

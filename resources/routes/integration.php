@@ -3,6 +3,7 @@
 use Site\Service\Integration\Linkedin;
 
 $router->get('/linkedin', function() {
+            $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json';
             $apiKey = 'vj3oxvlgfpni';
             $apiSecret = 'zVpY54LtLH0cTuYr';
             $userToken = 'ca62e630-5165-4a47-b93d-002bad5f1394';
@@ -19,12 +20,12 @@ $router->get('/linkedin', function() {
                 , 'educations'
                 , 'recommendations-received'
             );
+
             try {
                 $linkedin = new Linkedin($apiKey, $apiSecret);
                 $linkedin->setUserToken($userToken, $userSecret);
                 $linkedin->setResources($resources);
                 $json = $linkedin->get();
-                $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json';
                 if (!file_exists($file)) {
                     touch($file);
                 }

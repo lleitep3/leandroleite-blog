@@ -20,7 +20,7 @@ body{
     background-color: #f5f5f5;
     display: inline-block;
     height: 99%;
-
+    width: 100%;
 }
 
 .body{
@@ -104,3 +104,50 @@ body .content{
 }
 /* FIM - Pagina de artigos */
 
+/* Pagina About Me */
+    .boxInformation hr{
+        margin: 5px 0;
+    }
+    .boxInformation h3{
+        line-height: 30px;
+    }
+    .boxSkill .skill{
+        float: left;
+        margin: 0.1em;
+    }
+
+    .boxInformation p.period{
+        margin: 0;
+        font-size: 0.8em;
+    }
+    .boxInformation h4.subTitle{
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 15px;
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+/* FIM - Pagina About Me */
+
+/* Pagina Projetos */
+    .boxProjeto hr{
+        margin: 5px 0;
+    }
+
+    .boxProjeto h3{
+        line-height: 30px;
+    }
+
+    .boxProjeto abbr{
+        margin: 0;
+        font-size: 0.8em;
+    }
+
+    .boxProjeto h4.subTitle{
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 15px;
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+/* FIM - Pagina Projetos */
