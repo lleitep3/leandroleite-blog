@@ -31,3 +31,13 @@ $router->get('/linkedin', function() {
                 echo file_get_contents(PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json');
             }
         });
+
+$router->get('/githubrepos', function() {
+            $url = 'https://api.github.com/users/lleitep3/repos?type=owner&sort=pushed';
+            $curl = new Site\Service\CurlService();
+            $array = json_decode($curl->get($url)->fetch());
+            
+            echo json_encode(array_values(array_filter($array,function($item){
+                return !$item->fork;
+            })));
+        });
