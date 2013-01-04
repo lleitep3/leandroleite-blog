@@ -1,5 +1,5 @@
 <div class="hero-unit row">
-    <div class="span3">
+    <div class="span2">
         <img src="https://lh3.googleusercontent.com/-hb7RdDL5Wtg/AAAAAAAAAAI/AAAAAAAAADE/U5Maa4hq6tA/s250-c-k/photo.jpg" class="img-polaroid">
     </div>
     <div class="span9">
