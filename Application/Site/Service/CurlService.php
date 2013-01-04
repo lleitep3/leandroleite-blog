@@ -12,6 +12,7 @@ class CurlService {
     protected $options;
     protected $response;
     protected $info;
+    protected $responseHeaders;
 
     public function __construct() {
         $this->options = $this->getDefaultOptions();
@@ -32,6 +33,10 @@ class CurlService {
 
     public function getResponse($key = false) {
         return !$key ? $this->response : $this->response[$key];
+    }
+
+    public function getResponseHeader($key = false) {
+        return !$key ? $this->responseHeaders : $this->responseHeaders[$key];
     }
 
     public function setData(array $data) {
@@ -58,7 +63,7 @@ class CurlService {
             CURLOPT_POST => false,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => 60,
         );
     }
 
@@ -66,10 +71,13 @@ class CurlService {
         return curl_getinfo($this->info, CURLINFO_HTTP_CODE);
     }
 
-    protected function fetch() {
+    public function fetch() {
         $curl = curl_init();
         curl_setopt_array($curl, $this->options);
         $this->response = curl_exec($curl);
+        $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $this->responseHeaders = substr($this->response, 0, $headerSize);
+        $this->response = substr($this->response, $headerSize);
         $this->info = curl_getinfo($curl);
         curl_close($curl);
         return $this->response;
