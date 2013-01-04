@@ -24,20 +24,43 @@ $router->get('/linkedin', function() {
                 $linkedin->setUserToken($userToken, $userSecret);
                 $linkedin->setResources($resources);
                 $json = $linkedin->get();
-                file_put_contents(PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json', $json);
+                $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json';
+                if (!file_exists($file)) {
+                    touch($file);
+                }
+                chmod($file, 0666);
+
+                file_put_contents($file, $json);
                 echo $json;
             } catch (\Exception $e) {
                 error_log('erro ao consultar linkedIn :' . $e->getMessage());
-                echo file_get_contents(PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json');
+                echo file_get_contents($file);
             }
         });
 
 $router->get('/githubrepos', function() {
             $url = 'https://api.github.com/users/lleitep3/repos?type=owner&sort=pushed';
+            $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'gitHubRepos.json';
             $curl = new Site\Service\CurlService();
-            $array = json_decode($curl->get($url)->fetch());
-            
-            echo json_encode(array_values(array_filter($array,function($item){
-                return !$item->fork;
-            })));
+            $json = $curl->get($url)->fetch();
+
+            try {
+                if (!file_exists($file)) {
+                    touch($file);
+                }
+                chmod($file, 0666);
+
+                file_put_contents($file, $json);
+                $array = json_decode($json);
+                echo json_encode(
+                        array_values(
+                                array_filter($array, function($item) {
+                                            return !$item->fork;
+                                        })
+                        )
+                );
+            } catch (Exception $e) {
+                error_log('erro ao consultar githubRepos :' . $e->getMessage());
+                echo file_get_contents($file);
+            }
         });
