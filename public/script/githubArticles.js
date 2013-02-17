@@ -6,7 +6,7 @@ function githubArticles(data){
             var article = this.provider[k];
             data.push({
                 name: article.name.str_replace('.md',''),
-                description:
+                description: ''
                 });
         }
         

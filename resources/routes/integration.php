@@ -106,9 +106,16 @@ $router->get('/githubrepo/article/*', function($articleName) {
 
 $router->get('/googleDrive',function(){
     
-    $clientId = '921417781880.apps.googleusercontent.com';
-    $clientSecret = 'xHOZ5vOf6Yl2Nfwzs5Znfv2Y';
+    $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
+    $clientSecret = 'ppsbFOBU_jpD31aHqmQf73o9';
     
-    $google = new GoogleAPIClient\GoogleIntegration($clientId, $clientSecret);
+    $drive = new GoogleAPIClient\GoogleDriverService($clientId, $clientSecret);
     
 });
+
+$router->get('/gDriveCallback',function(){
+    var_dump($_SERVER);
+    var_dump($_REQUEST);
+    exit;
+});
+
