@@ -1,4 +1,27 @@
 <div class="span11">
+    <h1>Meus Projetos</h1>
+    <div class="row-fluid span11">
+        <div class="span11 boxArticles">
+        </div><!--/span-->
+    </div><!--/span-->
+</div><!--/span-->
+<script src="/script/githubArticles.js"></script>
+<script src="/script/githubArticlesAPIRender.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $.get('/githubrepos',function(data){
+            var github = new githubArticles(data);
+            var render = new githubAPIRender();
+            var repos = github.getRepositories();
+            var $boxRepositories = $('.boxRepositories');
+            for(var k in repos){
+                $boxRepositories.append(render.reposRender(repos[k]));
+            }
+        },'json');
+    });
+</script>
+
+<div class="span11">
     <h1>Ultimos Artigos</h1>
     <div class="row-fluid">
         <div class="span11">

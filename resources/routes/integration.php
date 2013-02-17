@@ -8,8 +8,8 @@ $router->get('/linkedin', function() {
             $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json';
             $apiKey = 'vj3oxvlgfpni';
             $apiSecret = 'zVpY54LtLH0cTuYr';
-            $userToken = 'ca62e630-5165-4a47-b93d-002bad5f1394';
-            $userSecret = '261e79e0-c301-42e5-a806-ed8e64f4a099';
+            $userToken = '9bc87eee-b75c-4dd2-ac49-433fb8672bce';
+            $userSecret = '55b2f2a0-2719-4b6b-aa44-ad7700be0e6e';
             $resources = array(
                 'email-address'
                 , 'skills'
@@ -86,14 +86,16 @@ $router->get('/githubrepo/articles', function() {
 
 $router->get('/githubrepo/article/*', function($articleName) {
             $gitHubClient = new GitHubPublicClient(new CurlService(), 'lleitep3');
-            $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'gitHubRepo_Articles.json';
+            $file = PATH_CACHE . DIRECTORY_SEPARATOR . "gitHubRepo_Article_{$articleName}.json";
             if (!file_exists($file)) {
                 touch($file);
                 chmod($file, 0666);
             }
 
             try {
-                $json = $gitHubClient->getRepoContent('Artigos', $articleName);
+                $obj = json_decode($gitHubClient->getRepoContent('Artigos', $articleName));
+                $obj->content = \ElephantMarkdown\Markdown::parse(str_replace("\n","<br>",base64_decode($obj->content)));
+                $json = json_encode($obj);
                 file_put_contents($file, $json);
                 echo $json;
             } catch (Exception $e) {
@@ -101,3 +103,12 @@ $router->get('/githubrepo/article/*', function($articleName) {
                 echo file_get_contents($file);
             }
         });
+
+$router->get('/googleDrive',function(){
+    
+    $clientId = '921417781880.apps.googleusercontent.com';
+    $clientSecret = 'xHOZ5vOf6Yl2Nfwzs5Znfv2Y';
+    
+    $google = new GoogleAPIClient\GoogleIntegration($clientId, $clientSecret);
+    
+});
