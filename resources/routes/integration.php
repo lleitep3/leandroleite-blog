@@ -111,10 +111,8 @@ $router->get('/googleDrive', function() {
             $redirectUri = 'http://leandroleite.info/googleDrive';
             $authEndPoint = 'https://accounts.google.com/o/oauth2/auth';
             $tokenEndPoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
-            $parameters = array(
-                'scope' => array(
+            $parameters = array('scope' => 
                     'https://www.googleapis.com/auth/drive'
-                )
             );
             $client = new \OAuth2\Client($clientId, $clientSecret);
 
