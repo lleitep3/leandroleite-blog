@@ -121,9 +121,15 @@ $router->get('/googleDrive', function() {
                     )
             );
 
+            if (isset($_SESSION['code']))
+                $authCode = $_SESSION['code'];
+            try {
+                $client->authenticate($authCode);
+            } catch (\Exception $e) {
+                var_dump($client->authenticate());
+                exit;
+            }
             // Exchange authorization code for access token
-            var_dump($client->authenticate());
-            exit;
             $client->getAccessToken();
 
             $drive = new GoogleAPIClient\GoogleDriverService($client);
@@ -134,7 +140,7 @@ $router->get('/googleDrive', function() {
 
 $router->get('/gDriveCallback', function() {
             @session_start();
-            $_SESSION['code'] =  $_GET['code'];
-            
+            $_SESSION['code'] = $_GET['code'];
+            header('Location:/googleDrive');
         });
 
