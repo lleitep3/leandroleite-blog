@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
 set_include_path(
     get_include_path() . PATH_SEPARATOR .
     realpath(__DIR__ . '/../../Application') . PATH_SEPARATOR .

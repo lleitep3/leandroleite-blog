@@ -1,9 +1,9 @@
 <?php
 
-require_once 'google-api-php-client/src/Google_Client.php';
-require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
-
 namespace GoogleAPIClient;
+
+require_once realpath(__DIR__ . '/google-api-php-client/src/Google_Client.php');
+require_once realpath(__DIR__ . '/google-api-php-client/src/contrib/Google_DriveService.php');
 
 /**
  *
@@ -12,11 +12,11 @@ namespace GoogleAPIClient;
 class GoogleIntegration {
 
     public function __construct($clientId, $clientSecret) {
-        $client = new Google_Client();
+        $client = new \Google_Client();
         // Get your credentials from the APIs Console
         $client->setClientId($clientId);
         $client->setClientSecret($clientSecret);
-        $client->setRedirectUri('urn:ietf:wg:oauth:2.0:oob');
+        $client->setRedirectUri('http://leandroleite.info/responseGoogle');
         $client->setScopes(
                 array(
                     'https://www.googleapis.com/auth/drive.apps.readonly'
@@ -24,7 +24,7 @@ class GoogleIntegration {
                     , 'https://www.googleapis.com/auth/drive.readonly.metadata'
                 )
         );
-        $service = new Google_DriveService($client);
+        $service = new \Google_DriveService($client);
         echo $authUrl = $client->createAuthUrl();
     }
 
