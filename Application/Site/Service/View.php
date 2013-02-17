@@ -2,6 +2,10 @@
 
 namespace Site\Service;
 
+/**
+ * 
+ * @author leandro <leandro@leandroleite.info>
+ */
 abstract class View {
 
     const EXT = '.php';

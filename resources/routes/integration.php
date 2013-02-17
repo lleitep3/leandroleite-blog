@@ -5,7 +5,7 @@ use Site\Service\Integration\GitHubPublicClient;
 use Site\Service\CurlService;
 
 $router->get('/linkedin', function() {
-            $file = PATH_CACHE . DIRECTORY_SEPARATOR . 'linkedIn.json';
+            $cacheManager = new \Site\Service\FileCacheManager(PATH_CACHE);
             $apiKey = 'vj3oxvlgfpni';
             $apiSecret = 'zVpY54LtLH0cTuYr';
             $userToken = '9bc87eee-b75c-4dd2-ac49-433fb8672bce';
@@ -22,23 +22,20 @@ $router->get('/linkedin', function() {
                 , 'educations'
                 , 'recommendations-received'
             );
+            $linkedin = new Linkedin($apiKey, $apiSecret);
+            $linkedin->setUserToken($userToken, $userSecret);
+            $linkedin->setResources($resources);
+            $json = $linkedin->get();
 
-            try {
-                $linkedin = new Linkedin($apiKey, $apiSecret);
-                $linkedin->setUserToken($userToken, $userSecret);
-                $linkedin->setResources($resources);
-                $json = $linkedin->get();
-                if (!file_exists($file)) {
-                    touch($file);
-                }
-                chmod($file, 0666);
-
-                file_put_contents($file, $json);
-                echo $json;
-            } catch (\Exception $e) {
-                error_log('erro ao consultar linkedIn :' . $e->getMessage());
-                echo file_get_contents($file);
+            $jsonObject = json_decode($json);
+            if (isset($jsonObject->status) && $jsonObject->status != 200) {
+                echo $cacheManager->fetchFileCache('linkedIn.json');
+                return;
             }
+
+            $cacheManager->updateFileCache('linkedIn.json', $json);
+            echo $json;
+            return;
         });
 
 $router->get('/githubrepos', function() {
@@ -105,37 +102,52 @@ $router->get('/githubrepo/article/*', function($articleName) {
         });
 
 $router->get('/googleDrive', function() {
-            @session_start();
-            $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
-            $clientSecret = 'INp5v7dtGFWWA9r7Sp4sHHp6';
-            $redirectUri = 'http://leandroleite.info/googleDrive';
-            $authEndPoint = 'https://accounts.google.com/o/oauth2/auth';
-            $tokenEndPoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
-            $parameters = array('scope' => 'https://www.googleapis.com/auth/drive');
-            $client = new \OAuth2\Client($clientId, $clientSecret);
-
-            if (!isset($_GET['code'])) {
-                $auth_url = $client->getAuthenticationUrl($authEndPoint, $redirectUri, $parameters);
-                header('Location: ' . $auth_url);
-                die('Redirect');
-            } else {
-                $params = array('code' => $_GET['code'], 'redirect_uri' => $redirectUri);
-                $response = $client->getAccessToken($tokenEndPoint, 'authorization_code', $params);
-                parse_str($response['result'], $info);
-                $client->setAccessToken($info['access_token']);
-                $response = $client->fetch('https://www.googleapis.com/drive/v2/files');
-                var_dump($response, $response['result']);
-            }
+            $headerEncoded = base64_encode('{"alg":"RS256","typ":"JWT"}');
+            $claimsEncoded = base64_encode(
+                    json_encode(
+                            (object) array(
+                                "iss" => "921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com",
+                                "scope" => "https://www.googleapis.com/auth/plus.me",
+                                "aud" => "https://accounts.google.com/o/oauth2/token",
+                                "exp" => 1328554385,
+                                "iat" => 1328550785
+                            )
+                    )
+            );
+        });
 
 
+//$router->get('/googleDrive', function() {
+//            @session_start();
+//            $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
+//            $clientSecret = 'INp5v7dtGFWWA9r7Sp4sHHp6';
+//            $redirectUri = 'http://leandroleite.info/googleDrive';
+//            $authEndPoint = 'https://accounts.google.com/o/oauth2/auth';
+//            $tokenEndPoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+//            $parameters = array(
+//                'scope' => 'https://www.googleapis.com/auth/drive',
+//                'access_type' => 'offline'
+//            );
+//            $client = new \OAuth2\Client($clientId, $clientSecret);
+//
+//            if (!isset($_GET['code'])) {
+//                $auth_url = $client->getAuthenticationUrl($authEndPoint, $redirectUri, $parameters);
+//                header('Location: ' . $auth_url);
+//                die('Redirect');
+//            } else {
+//                $params = array('code' => $_GET['code'], 'redirect_uri' => $redirectUri);
+//                $response = $client->getAccessToken($tokenEndPoint, 'authorization_code', $params);
+//                parse_str($response['result'], $info);
+//                $client->setAccessToken($info['access_token']);
+//                $response = $client->fetch('https://www.googleapis.com/drive/v2/files');
+//                var_dump($response, $response['result']);
+//            }
 
-
-            if (isset($_GET['code'])) {
-                $client->authenticate();
-                $_SESSION['token'] = $client->getAccessToken();
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
-            }
-
+//            if (isset($_GET['code'])) {
+//                $client->authenticate();
+//                $_SESSION['token'] = $client->getAccessToken();
+//                header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+//            }
 //            $client = new \GoogleAPIClient\GoogleClient();
 //            $client->setClientId($clientId);
 //            $client->setClientSecret($clientSecret);
@@ -166,11 +178,9 @@ $router->get('/googleDrive', function() {
 //            $results = $drive->searchFiles();
 //
 //            var_dump($results);
-        });
-
-$router->get('/gDriveCallback', function() {
-            @session_start();
-            $_SESSION['code'] = $_GET['code'];
-            header('Location:/googleDrive');
-        });
-
+//        });
+//$router->get('/gDriveCallback', function() {
+//            @session_start();
+//            $_SESSION['code'] = $_GET['code'];
+//            header('Location:/googleDrive');
+//        });
