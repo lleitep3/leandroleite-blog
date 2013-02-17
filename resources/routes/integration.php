@@ -120,7 +120,8 @@ $router->get('/googleDrive', function() {
                         , 'https://www.googleapis.com/auth/drive.readonly.metadata'
                     )
             );
-
+            
+            $drive = new GoogleAPIClient\GoogleDriverService($client);
             if (isset($_SESSION['code']))
                 $authCode = $_SESSION['code'];
             try {
@@ -132,7 +133,6 @@ $router->get('/googleDrive', function() {
             // Exchange authorization code for access token
             $client->getAccessToken();
 
-            $drive = new GoogleAPIClient\GoogleDriverService($client);
             $results = $drive->searchFiles('title', 'contains', '#publish');
 
             var_dump($results);
