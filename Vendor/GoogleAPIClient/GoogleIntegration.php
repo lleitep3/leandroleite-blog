@@ -17,7 +17,13 @@ class GoogleIntegration {
         $client->setClientId($clientId);
         $client->setClientSecret($clientSecret);
         $client->setRedirectUri('urn:ietf:wg:oauth:2.0:oob');
-        $client->setScopes(array('https://www.googleapis.com/auth/drive'));
+        $client->setScopes(
+                array(
+                    'https://www.googleapis.com/auth/drive.apps.readonly'
+                    , 'https://www.googleapis.com/auth/drive.readonly'
+                    , 'https://www.googleapis.com/auth/drive.readonly.metadata'
+                )
+        );
         $service = new Google_DriveService($client);
         echo $authUrl = $client->createAuthUrl();
     }
