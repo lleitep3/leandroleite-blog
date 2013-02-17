@@ -94,7 +94,7 @@ $router->get('/githubrepo/article/*', function($articleName) {
 
             try {
                 $obj = json_decode($gitHubClient->getRepoContent('Artigos', $articleName));
-                $obj->content = \ElephantMarkdown\Markdown::parse(str_replace("\n","<br>",base64_decode($obj->content)));
+                $obj->content = \ElephantMarkdown\Markdown::parse(str_replace("\n", "<br>", base64_decode($obj->content)));
                 $json = json_encode($obj);
                 file_put_contents($file, $json);
                 echo $json;
@@ -104,18 +104,37 @@ $router->get('/githubrepo/article/*', function($articleName) {
             }
         });
 
-$router->get('/googleDrive',function(){
-    
-    $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
-    $clientSecret = 'ppsbFOBU_jpD31aHqmQf73o9';
-    
-    $drive = new GoogleAPIClient\GoogleDriverService($clientId, $clientSecret);
-    
-});
+$router->get('/googleDrive', function() {
+            @session_start();
+            $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
+            $clientSecret = 'INp5v7dtGFWWA9r7Sp4sHHp6';
+            $client = new \GoogleAPIClient\GoogleClient();
+            $client->setClientId($clientId);
+            $client->setClientSecret($clientSecret);
 
-$router->get('/gDriveCallback',function(){
-    var_dump($_SERVER);
-    var_dump($_REQUEST);
-    exit;
-});
+            $client->setRedirectUri('http://leandroleite.info/gDriveCallback');
+            $client->setScopes(
+                    array(
+                        'https://www.googleapis.com/auth/drive.apps.readonly'
+                        , 'https://www.googleapis.com/auth/drive.readonly'
+                        , 'https://www.googleapis.com/auth/drive.readonly.metadata'
+                    )
+            );
+
+            // Exchange authorization code for access token
+            var_dump($client->authenticate());
+            exit;
+            $client->getAccessToken();
+
+            $drive = new GoogleAPIClient\GoogleDriverService($client);
+            $results = $drive->searchFiles('title', 'contains', '#publish');
+
+            var_dump($results);
+        });
+
+$router->get('/gDriveCallback', function() {
+            @session_start();
+            $_SESSION['code'] =  $_GET['code'];
+            
+        });
 
