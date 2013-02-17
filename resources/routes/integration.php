@@ -116,8 +116,6 @@ $router->get('/googleDrive', function() {
 
             if (!isset($_GET['code'])) {
                 $auth_url = $client->getAuthenticationUrl($authEndPoint, $redirectUri, $parameters);
-                var_dump($auth_url);
-                exit;
                 header('Location: ' . $auth_url);
                 die('Redirect');
             } else {
