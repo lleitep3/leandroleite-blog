@@ -108,34 +108,68 @@ $router->get('/googleDrive', function() {
             @session_start();
             $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
             $clientSecret = 'INp5v7dtGFWWA9r7Sp4sHHp6';
-            $client = new \GoogleAPIClient\GoogleClient();
-            $client->setClientId($clientId);
-            $client->setClientSecret($clientSecret);
-
-            $client->setRedirectUri('http://leandroleite.info/gDriveCallback');
-            $client->setScopes(
-                    array(
-                        'https://www.googleapis.com/auth/drive.apps.readonly'
-                        , 'https://www.googleapis.com/auth/drive.readonly'
-                        , 'https://www.googleapis.com/auth/drive.readonly.metadata'
-                    )
+            $redirectUri = 'http://leandroleite.info/googleDrive';
+            $authEndPoint = 'https://accounts.google.com/o/oauth2/auth';
+            $tokenEndPoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+            $parameters = array(
+                'scope' => array(
+                    'https://www.googleapis.com/auth/drive'
+                )
             );
-            
-            $drive = new GoogleAPIClient\GoogleDriverService($client);
-            if (isset($_SESSION['code']))
-                $authCode = $_SESSION['code'];
-            try {
-                $client->authenticate($authCode);
-            } catch (\Exception $e) {
-                var_dump($client->authenticate());
-                exit;
+            $client = new \OAuth2\Client($clientId, $clientSecret);
+
+            if (!isset($_GET['code'])) {
+                $auth_url = $client->getAuthenticationUrl($authEndPoint, $redirectUri, $parameters);
+                header('Location: ' . $auth_url);
+                die('Redirect');
+            } else {
+                $params = array('code' => $_GET['code'], 'redirect_uri' => REDIRECT_URI);
+                $response = $client->getAccessToken($tokenEndPoint, 'authorization_code', $params);
+                parse_str($response['result'], $info);
+                $client->setAccessToken($info['access_token']);
+                $response = $client->fetch('https://graph.facebook.com/me');
+                var_dump($response, $response['result']);
             }
-            // Exchange authorization code for access token
-            $client->getAccessToken();
 
-            $results = $drive->searchFiles('title', 'contains', '#publish');
 
-            var_dump($results);
+
+
+            if (isset($_GET['code'])) {
+                $client->authenticate();
+                $_SESSION['token'] = $client->getAccessToken();
+                header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+            }
+
+//            $client = new \GoogleAPIClient\GoogleClient();
+//            $client->setClientId($clientId);
+//            $client->setClientSecret($clientSecret);
+//            $client->setApplicationName('leandroleite.info');
+//            $client->setDeveloperKey('921417781880-q55apggio21ecctui2456069c05l9tcq@developer.gserviceaccount.com');
+//            $client->setRedirectUri('http://leandroleite.info/gDriveCallback');
+//            $client->setScopes(
+//                    array(
+//                        'https://www.googleapis.com/auth/drive.apps.readonly'
+//                        , 'https://www.googleapis.com/auth/drive.readonly'
+//                        , 'https://www.googleapis.com/auth/drive.readonly.metadata'
+//                    )
+//            );
+//
+//            $drive = new GoogleAPIClient\GoogleDriverService($client);
+//            $auth = new \GoogleAPIClient\GoogleOAuth2Service($client);
+//            if (isset($_SESSION['code']))
+//                $authCode = $_SESSION['code'];
+//            try {
+//                $client->authenticate($authCode);
+//            } catch (\Exception $e) {
+//                var_dump($client->authenticate());
+//                exit;
+//            }
+//            // Exchange authorization code for access token
+//            $client->getAccessToken();
+//
+//            $results = $drive->searchFiles();
+//
+//            var_dump($results);
         });
 
 $router->get('/gDriveCallback', function() {
