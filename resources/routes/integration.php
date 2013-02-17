@@ -123,11 +123,11 @@ $router->get('/googleDrive', function() {
                 header('Location: ' . $auth_url);
                 die('Redirect');
             } else {
-                $params = array('code' => $_GET['code'], 'redirect_uri' => REDIRECT_URI);
+                $params = array('code' => $_GET['code'], 'redirect_uri' => $redirectUri);
                 $response = $client->getAccessToken($tokenEndPoint, 'authorization_code', $params);
                 parse_str($response['result'], $info);
                 $client->setAccessToken($info['access_token']);
-                $response = $client->fetch('https://graph.facebook.com/me');
+                $response = $client->fetch('https://www.googleapis.com/drive/v2/files');
                 var_dump($response, $response['result']);
             }
 
