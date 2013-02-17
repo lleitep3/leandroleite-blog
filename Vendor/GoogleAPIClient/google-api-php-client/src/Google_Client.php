@@ -371,7 +371,7 @@ class Google_Client {
   /**
    * Declare if objects should be returned by the api service classes.
    *
-   * @param boolean $useBatch True if the experimental batch support should
+   * @param boolean $useBatch True if the experimental bat$useBatchch support should
    * be enabled. Defaults to False.
    * @experimental
    */

@@ -19,11 +19,12 @@ class GoogleDriverService {
         // Get your credentials from the APIs Console
         $client->setClientId($clientId);
         $client->setClientSecret($clientSecret);
+        $client->setApplicationName('leandroleite.info');
         
         $client->setRedirectUri('http://leandroleite.info/gDriveCallback');
         $client->setScopes(
                 array(
-                    'https://www.googleapis.com/auth/drive.apps.readonly'
+                    'https://www.googleapis.com/auth/drive.file'
                     , 'https://www.googleapis.com/auth/drive.readonly'
                     , 'https://www.googleapis.com/auth/drive.readonly.metadata'
                 )
@@ -31,19 +32,18 @@ class GoogleDriverService {
         $this->service = new \Google_DriveService($client);
         
         echo $authUrl = $client->createAuthUrl();
-//        $curl = new \Site\Service\CurlService();
-//        $curl->get($authUrl)->fetch();
-//        $return = $curl->get($authUrl)->getResponse();
-//        $returnHeaders = $curl->getResponseHeader();
-//        echo $return . $returnHeaders;
-//        exit;
-        $authCode = '4/KxgFbpLSUd_bRpMtVxIA-buoURNl.orQJ3u4XVtYXshQV0ieZDAraWmTQeQI';
+        $curl = new \Site\Service\CurlService();
+        $curl->get($authUrl)->fetch();
+        $return = $curl->get($authUrl)->getResponse();
+        $returnHeaders = $curl->getResponseHeader();
+        echo $return . $returnHeaders;
+        exit;
+        $authCode = '4/lRO9CbZxtln4v2S_-G07vEVjaYe7.slindDUxybYWshQV0ieZDAqsgEvReQI';
 
         // Exchange authorization code for access token
-        $accessToken = $client->authenticate($authCode);
-        
-        $client->setAccessToken($accessToken);
-        var_dump($this->service->files->listFiles(array()));
+        $client->authenticate($authCode);
+        $opa = $client->getAccessToken();
+        var_dump($opa, $this->service->files->listFiles(array()));
 
     }
 
