@@ -33,7 +33,7 @@ class CurlService {
 
     public function formPost($url, array $postParam = array()) {
         $this->post($url, $postParam);
-        $this->setHeaders(array('Content-Type' => 'application/x-www-form-urlencoded'));
+        $this->setHeaders(array('Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'));
         return $this;
     }
 
@@ -91,7 +91,7 @@ class CurlService {
         $this->responseHeaders = substr($this->response, 0, $headerSize);
         $this->response = substr($this->response, $headerSize);
         $this->info = curl_getinfo($curl);
-        var_dump($this->info);
+        var_dump($this->info,$this->options);
         curl_close($curl);
         return $this->response;
     }

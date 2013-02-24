@@ -17,7 +17,7 @@
                 "claims": {
                     "iss": "861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd@developer.gserviceaccount.com",
                     "prn": "leandro@leandroleite.info",
-                    "scope": "https:\/\/accounts.google.com\/o\/oauth2\/drive",
+                    "scope": "https:\/\/www.googleapis.com\/auth\/drive.apps.readonly",
                     "aud": "https:\/\/accounts.google.com\/o\/oauth2\/token",
                     "exp": "",
                     "iat": ""
