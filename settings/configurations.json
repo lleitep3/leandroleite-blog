@@ -24,7 +24,7 @@
                 }
             },
             "privateConf": {
-                "filePath": "\/home\/leandro\/projects\/leandroleite\/settings\/ba64dba999f881cc55ee209b867c2cad92d6620a-privatekey.p12",
+                "filePath": "\/var\/www\/leandroleite\/settings\/ba64dba999f881cc55ee209b867c2cad92d6620a-privatekey.p12",
                 "pass": "notasecret"
             }
         }
