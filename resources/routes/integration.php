@@ -3,6 +3,7 @@
 use Site\Service\Integration\Linkedin;
 use Site\Service\Integration\GitHubPublicClient;
 use Site\Service\CurlService;
+use Leviathan\Service\Locator;
 
 $router->get('/linkedin', function() {
             $cacheManager = new \Site\Service\FileCacheManager(PATH_CACHE);
@@ -102,21 +103,39 @@ $router->get('/githubrepo/article/*', function($articleName) {
         });
 
 $router->get('/googleDrive', function() {
-            $headerEncoded = base64_encode('{"alg":"RS256","typ":"JWT"}');
-            $claimsEncoded = base64_encode(
-                    json_encode(
-                            (object) array(
-                                "iss" => "921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com",
-                                "scope" => "https://www.googleapis.com/auth/plus.me",
-                                "aud" => "https://accounts.google.com/o/oauth2/token",
-                                "exp" => 1328554385,
-                                "iat" => 1328550785
-                            )
-                    )
-            );
+
+            // retrieving Json Wev Token parameters
+            $header = (array) Locator::get(':integrations:google:jwt:header');
+            $claims = (array) Locator::get(':integrations:google:jwt:claims');
+            $claims['iat'] = time();
+            $claims['exp'] = $claims['iat'] . '3600';
+
+            // retrieving privateKey
+            $file = realpath(Locator::get(':integrations:google:privateConf')->filePath);
+            $pass = Locator::get(':integrations:google:privateConf')->pass;
+            $certs = array();
+            if (!openssl_pkcs12_read(file_get_contents($file), $certs, $pass)) {
+                throw new Exception('not possible to autenticate with google');
+                exit;
+            }
+            $pkeyid = openssl_get_privatekey($certs['pkey']);
+
+            // creating Json Web Token
+            $jwt = new GoogleAPIClient\GoogleJWT($header, $claims);
+            $jwt->generateSignature($pkeyid);
+
+            $google = new GoogleAPIClient\GoogleServerRequest($jwt);
+            var_dump($google->getAccessTokenData());
+            exit;
         });
 
 
+$router->any('/testeOAuthRequest', function() {
+            ob_start();
+            print_r($_POST);
+            $opa = ob_get_clean();
+            echo $opa;
+        });
 //$router->get('/googleDrive', function() {
 //            @session_start();
 //            $clientId = '921417781880-q55apggio21ecctui2456069c05l9tcq.apps.googleusercontent.com';
