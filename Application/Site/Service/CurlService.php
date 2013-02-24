@@ -31,6 +31,12 @@ class CurlService {
         return $this;
     }
 
+    public function formPost($url, array $postParam = array()) {
+        $this->post($url, $postParam);
+        $this->setHeaders(array('Content-Type' => 'application/x-www-form-urlencoded'));
+        return $this;
+    }
+
     public function getResponse($key = false) {
         return !$key ? $this->response : $this->response[$key];
     }
@@ -41,7 +47,7 @@ class CurlService {
 
     public function setData(array $data) {
         $array = array();
-        if (!isset($this->options[CURLOPT_POSTFIELDS]))
+        if (isset($this->options[CURLOPT_POSTFIELDS]))
             $array = $this->options[CURLOPT_POSTFIELDS];
 
         $this->options[CURLOPT_POSTFIELDS] = http_build_query(array_merge($array, $data));
@@ -56,6 +62,12 @@ class CurlService {
 
     public function setOption($key, $value) {
         $this->options[$key] = $value;
+    }
+
+    public function setHeaders(array $headers) {
+
+        $this->setOption(CURLOPT_HTTPHEADER, $headers);
+        return $this;
     }
 
     public function getDefaultOptions() {
@@ -79,6 +91,7 @@ class CurlService {
         $this->responseHeaders = substr($this->response, 0, $headerSize);
         $this->response = substr($this->response, $headerSize);
         $this->info = curl_getinfo($curl);
+        var_dump($this->info);
         curl_close($curl);
         return $this->response;
     }

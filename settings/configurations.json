@@ -1,0 +1,32 @@
+{
+    "integrations": {
+        "google": {
+            "info": {
+                "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
+                "token_uri": "https:\/\/accounts.google.com\/o\/oauth2\/token",
+                "client_email": "861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd@developer.gserviceaccount.com",
+                "client_x509_cert_url": "https:\/\/www.googleapis.com\/robot\/v1\/metadata\/x509\/861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd@developer.gserviceaccount.com",
+                "client_id": "861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd.apps.googleusercontent.com",
+                "auth_provider_x509_cert_url": "https:\/\/www.googleapis.com\/oauth2\/v1\/certs"
+            },
+            "jwt": {
+                "header": {
+                    "alg": "RS256",
+                    "typ": "JWT"
+                },
+                "claims": {
+                    "iss": "861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd@developer.gserviceaccount.com",
+                    "prn": "leandro@leandroleite.info",
+                    "scope": "https:\/\/accounts.google.com\/o\/oauth2\/drive",
+                    "aud": "https:\/\/accounts.google.com\/o\/oauth2\/token",
+                    "exp": "",
+                    "iat": ""
+                }
+            },
+            "privateConf": {
+                "filePath": "\/var\/www\/leandroleite\/settings\/ba64dba999f881cc55ee209b867c2cad92d6620a-privatekey.p12",
+                "pass": "notasecret"
+            }
+        }
+    }
+}
