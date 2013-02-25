@@ -104,6 +104,7 @@ $router->get('/githubrepo/article/*', function($articleName) {
 
 $router->get('/googleDrive', function() {
             @session_start();
+            $_SESSION['refresh_token'] = Locator::get(':integrations:google:refresh_token');
             $info = Locator::get(':integrations:google:info');
             $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
             $googleClient->setRedirectUri($info->redirect_uri);
@@ -116,46 +117,23 @@ $router->get('/googleDrive', function() {
 
             $tokenUri = $info->token_uri;
             $result = $googleClient->getAccessToken($tokenUri, $_GET['code']);
+            if (isset($result->error))
+                throw new Exception('error' . print_r($result, 3));
 
-            var_dump($result);
-
-
-
-
-
-
-
-
-//            $driver = GoogleAPIClient\BuildDriveService::buildService();
-//            var_dump($driver->files->listFiles());
-            exit;
-            // retrieving Json Wev Token parameters
-            $header = (array) Locator::get(':integrations:google:jwt:header');
-            $claims = (array) Locator::get(':integrations:google:jwt:claims');
-            $now = time();
-            $claims['iat'] = $now;
-            $claims['exp'] = $now + 3600;
-
-            // retrieving privateKey
-            $file = realpath(Locator::get(':integrations:google:privateConf')->filePath);
-            $pass = Locator::get(':integrations:google:privateConf')->pass;
-            $certs = array();
-            if (!openssl_pkcs12_read(file_get_contents($file), $certs, $pass)) {
-                throw new Exception('not possible to autenticate with google');
-                exit;
+            if (isset($result->access_token)) {
+                ;
             }
-            $pkeyid = openssl_get_privatekey($certs['pkey']);
-
-            // creating Json Web Token
-            $jwt = new GoogleAPIClient\GoogleJWT($header, $claims);
-            $jwt->generateSignature($pkeyid);
-
-            $google = new GoogleAPIClient\GoogleServerRequest($jwt);
-            var_dump($google->getAccessTokenData());
-            exit;
         });
 
+$router->get('/articles/find/*', function() {
+            @session_start();
 
-$router->get('/googlee46ebe5824247571.html', function() {
-            echo 'google-site-verification: googlee46ebe5824247571.html';
+            $accessToken = Locator::get(':integrations:google')->access_token;
+            $info = Locator::get(':integrations:google:info');
+            $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
+            $googleClient->setAccessToken($accessToken);
+            
+            $parameters = array('title contains publish');
+            $result = $googleClient->searchFiles($parameters);
+            var_dump($result);
         });
