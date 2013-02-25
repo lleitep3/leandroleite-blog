@@ -103,24 +103,21 @@ $router->get('/githubrepo/article/*', function($articleName) {
         });
 
 $router->get('/googleDrive', function() {
-
             @session_start();
-            $data = array(
-                'scope' => 'https://www.googleapis.com/auth/drive',
-                'state' => 'drive_access',
-                'redirect_uri' => 'http://leandroleite.info/googleDrive',
-                'response_type' => 'code',
-                'client_id' => '861685171956.apps.googleusercontent.com',
-                'access_type' => 'offline',
-                'approval_prompt' => 'force'
-            );
-            $data = http_build_query($data);
-            $curl = new CurlService();
-            $result = $curl->get('https://accounts.google.com/o/oauth2/auth?'.$data)->fetch();
-            echo $result;
+            $info = Locator::get(':integrations:google:info');
+            $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
+            $googleClient->setRedirectUri($info->redirect_uri);
 
-            exit;
+            if (!isset($_GET['code'])) {
+                $uriAuth = $info->auth_uri;
+                echo $googleClient->getRedirectLink($uriAuth);
+                exit;
+            }
 
+            $tokenUri = $info->token_uri;
+            $result = $googleClient->getAccessToken($tokenUri, $_GET['code']);
+
+            var_dump($result);
 
 
 
