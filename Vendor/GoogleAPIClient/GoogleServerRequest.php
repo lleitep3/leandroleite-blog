@@ -37,7 +37,7 @@ class GoogleServerRequest {
 
     public function getDataToRetrieveAccessToken() {
         return array(
-            'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'grant_type' => 'http://oauth.net/grant_type/jwt/1.0/bearer',
             'assertion' => $this->getJsonWebToken()->getString()
         );
     }

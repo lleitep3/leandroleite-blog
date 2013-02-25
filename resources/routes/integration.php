@@ -104,14 +104,40 @@ $router->get('/githubrepo/article/*', function($articleName) {
 
 $router->get('/googleDrive', function() {
 
-            $driver = GoogleAPIClient\BuildDriveService::buildService();
-            var_dump($driver->files->listFiles());
+            @session_start();
+            $data = array(
+                'scope' => 'https://www.googleapis.com/auth/drive',
+                'state' => 'drive_access',
+                'redirect_uri' => 'http://leandroleite.info/googleDrive',
+                'response_type' => 'code',
+                'client_id' => '861685171956.apps.googleusercontent.com',
+                'access_type' => 'offline',
+                'approval_prompt' => 'force'
+            );
+            $data = http_build_query($data);
+            $curl = new CurlService();
+            $result = $curl->get('https://accounts.google.com/o/oauth2/auth?'.$data)->fetch();
+            echo $result;
+
+            exit;
+
+
+
+
+
+
+
+
+
+//            $driver = GoogleAPIClient\BuildDriveService::buildService();
+//            var_dump($driver->files->listFiles());
             exit;
             // retrieving Json Wev Token parameters
             $header = (array) Locator::get(':integrations:google:jwt:header');
             $claims = (array) Locator::get(':integrations:google:jwt:claims');
-            $claims['exp'] = time() + 3500;
-            $claims['iat'] = time();
+            $now = time();
+            $claims['iat'] = $now;
+            $claims['exp'] = $now + 3600;
 
             // retrieving privateKey
             $file = realpath(Locator::get(':integrations:google:privateConf')->filePath);

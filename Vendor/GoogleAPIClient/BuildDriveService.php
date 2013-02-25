@@ -22,14 +22,15 @@ class BuildDriveService {
      */
     public static function buildService() {
         $DRIVE_SCOPE = array('https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.readonly');
-        $SERVICE_ACCOUNT_EMAIL = '861685171956-bso5e477bs1l2bpg363v5s20jdcvp1fd@developer.gserviceaccount.com';
+        $SERVICE_ACCOUNT_EMAIL = '921417781880-5oqtsjlfrptps3d697vtaius63v6ckit@developer.gserviceaccount.com';
         $SERVICE_ACCOUNT_PKCS12_FILE_PATH = Locator::get(':integrations:google:privateConf')->filePath;
         
         $key = file_get_contents($SERVICE_ACCOUNT_PKCS12_FILE_PATH);
         $auth = new \Google_AssertionCredentials(
                 $SERVICE_ACCOUNT_EMAIL, $DRIVE_SCOPE, $key,'notasecret', 
-                'http://oauth.net/grant_type/jwt/1.0/bearer','leandro@leandroleite.info');
+                'urn:ietf:params:oauth:grant-type:jwt-bearer','leandro@leandroleite.info');
         $client = new \Google_Client();
+        $client->setClientId('921417781880-5oqtsjlfrptps3d697vtaius63v6ckit.apps.googleusercontent.com');
         $client->setUseObjects(true);
         $client->setAssertionCredentials($auth);
         return new \Google_DriveService($client);

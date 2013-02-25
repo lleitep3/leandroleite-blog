@@ -42,19 +42,24 @@ class GoogleJWT {
         return $this;
     }
 
+    public function encode($data) {
+        $b64 = json_encode($data);
+        return str_replace(array('+', '/', '\r', '\n', '='), array('-', '_'), $b64);
+    }
+
     public function getHeaderEncoded() {
-        return base64_encode(json_encode($this->getHeader()));
+        return $this->encode($this->getHeader());
     }
 
     public function getClaimsEncoded() {
-        return base64_encode(json_encode($this->getHeader()));
+        return $this->encode($this->getHeader());
     }
 
     public function generateSignature(&$pkeyid) {
         if (!$this->signature) {
             $data = "{$this->getHeaderEncoded()}.{$this->getClaimsEncoded()}";
             openssl_sign($data, $signature, $pkeyid, $this->algorithm);
-            $this->signature = base64_encode($signature);
+            $this->signature = $this->encode($signature);
         }
         return $this;
     }
