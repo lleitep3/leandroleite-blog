@@ -1,7 +1,7 @@
 {
     "integrations": {
         "google": {
-            "refresh_token": "1/mdKRegpEQhfxoP2wkYE5mSLTLaIu5xO9Unlj5FIatIo",
+            "refresh_token": "",
             "info": {
                 "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
                 "client_id": "70328910202.apps.googleusercontent.com",
@@ -17,7 +17,10 @@
                 "scopes": [
                     "https:\/\/www.googleapis.com\/auth\/drive",
                     "https:\/\/www.googleapis.com\/auth\/drive.readonly",
-                    "https:\/\/www.googleapis.com\/auth\/drive.readonly.metadata"
+                    "https:\/\/www.googleapis.com\/auth\/drive.readonly.metadata",
+                    "https:\/\/www.googleapis.com\/auth\/plus.login",
+                    "https:\/\/www.googleapis.com\/auth\/plus.me",
+                    "https:\/\/www.googleapis.com\/auth\/userinfo.profile"
                 ]
             }
         }
