@@ -110,12 +110,14 @@ $router->get('/googleDrive', function() {
             $googleClient->setRedirectUri($info->redirect_uri);
             $googleClient->setScopes((array) $info->scopes);
 
-            if (isset($_GET['code'])) {
-                $return = $googleClient->getRefreshToken($_GET['code']);
-                var_dump($return);
+            if (!isset($_GET['code'])) {
+                echo $googleClient->getRedirectLink();
                 exit;
             }
-            echo $googleClient->getRedirectLink();
+            $return = $googleClient->getRefreshToken($_GET['code']);
+            $_SESSION['accessToken'] = $return->access_token;
+            $_SESSION['tokenType'] = $return->token_type;
+            error_log("segue ai o refresh_token={$return->refresh_token} ");
             exit;
         });
 
@@ -139,7 +141,7 @@ $router->get('/googleGetRefreshToken', function() {
                 var_dump($return);
                 exit;
             }
-            echo 'oia->' . $_SESSION['accessToken'] = $return->access_token;
+            $_SESSION['accessToken'] = $return->access_token;
             $_SESSION['tokenType'] = $return->token_type;
 
             $uri = (isset($_GET['sendBack'])) ? $_GET['sendBack'] : $_SERVER['PHP_SELF'];
