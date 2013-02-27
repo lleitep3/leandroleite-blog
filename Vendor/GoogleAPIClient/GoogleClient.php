@@ -44,7 +44,7 @@ class GoogleClient {
         $data = http_build_query(array(
             'scope' => implode(' ', $this->scopes),
             'state' => 'drive_access',
-            'redirect_uri' => 'http://leandroleite.info/googleGetRefreshToken',
+            'redirect_uri' => 'http://leandroleite.info/googleDrive',
             'response_type' => 'code',
             'client_id' => $this->clientId,
             'access_type' => 'offline',
