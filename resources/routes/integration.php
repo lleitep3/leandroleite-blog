@@ -110,22 +110,26 @@ $router->get('/googleDrive', function() {
             $googleClient->setRedirectUri($info->redirect_uri);
             $googleClient->setScopes((array) $info->scopes);
 
-//            if (!isset($_GET['code'])) {
-//                echo $googleClient->getRedirectLink();
-//                exit;
-//            }
-//            $return = $googleClient->getRefreshToken($_GET['code']);
-//            $_SESSION['accessToken'] = $return->access_token;
-//            $_SESSION['tokenType'] = $return->token_type;
-//            error_log("segue ai o refresh_token={$return->refresh_token} ");
-//            exit;
+            $refreshToken = Locator::get(':integrations:google')->refresh_token;
+
+            if (!$refreshToken) {
+                if (!isset($_GET['code'])) {
+                    echo $googleClient->getRedirectLink();
+                    exit;
+                }
+                $return = $googleClient->getRefreshToken($_GET['code']);
+                $_SESSION['accessToken'] = $return->access_token;
+                $_SESSION['tokenType'] = $return->token_type;
+                error_log("segue ai o refresh_token={$return->refresh_token} ");
+                var_dump($return);
+                exit;
+            }
 
             if (isset($_SESSION['accessToken'])) {
                 echo 'you is already authenticated! try to access ' .
                 '<a href="/articles/find/">Here</a>';
                 exit;
             }
-            $refreshToken = Locator::get(':integrations:google')->refresh_token;
 
             $return = $googleClient->getAccessToken($refreshToken);
             if (!isset($return->access_token)) {
@@ -150,11 +154,10 @@ $router->get('/articles/find/*', function() {
             $parameters = array('title contains publish');
             $result = $googleClient->searchFiles($parameters);
             if ($result->error->code == 403) {
-                var_dump('opa');
                 $_SESSION['accessToken'] = null;
                 unset($_SESSION['accessToken']);
                 session_destroy();
-                header('Location:/googleGetRefreshToken?sendBack=/articles/find/');
+                //header('Location:/googleGetRefreshToken?sendBack=/articles/find/');
             }
             var_dump($result, $_SESSION);
         });

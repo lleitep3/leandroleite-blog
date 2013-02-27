@@ -91,7 +91,6 @@ class CurlService {
         $this->responseHeaders = substr($this->response, 0, $headerSize);
         $this->response = substr($this->response, $headerSize);
         $this->info = curl_getinfo($curl);
-        var_dump($this->info,$this->options);
         curl_close($curl);
         return $this->response;
     }
