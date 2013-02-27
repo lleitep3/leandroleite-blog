@@ -88,4 +88,11 @@ class GoogleClient {
         return json_decode($curl->get($url)->fetch());
     }
 
+    public function get($uri) {
+        $url = "https://www.googleapis.com/drive/v2/{$uri}";
+        $curl = new CurlService();
+        $curl->setHeaders(array('Authorization' => "Bearer {$this->accessToken}"));
+        return json_decode($curl->get($url)->fetch());
+    }
+
 }

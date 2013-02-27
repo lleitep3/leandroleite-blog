@@ -161,3 +161,15 @@ $router->get('/articles/find/*', function() {
             }
             var_dump($result, $_SESSION);
         });
+
+$router->get('/services/**', function($attrs) {
+            @session_start();
+
+            $accessToken = $_SESSION['accessToken'];
+            $info = Locator::get(':integrations:google:info');
+            $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
+            $googleClient->setAccessToken($accessToken);
+
+            $result = $googleClient->get(implode('/', $attrs));
+            var_dump($result, $_SESSION);
+        });
