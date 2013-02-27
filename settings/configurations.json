@@ -1,7 +1,7 @@
 {
     "integrations": {
         "google": {
-            "refresh_token": "1/Jv4qRSVjtOrSYFI4aL_9mNNO18SO3b2k_szFNzn3MIo",
+            "refresh_token": "",
             "info": {
                 "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
                 "client_id": "70328910202.apps.googleusercontent.com",
