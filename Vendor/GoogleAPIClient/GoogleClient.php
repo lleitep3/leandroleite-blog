@@ -16,6 +16,9 @@ class GoogleClient {
     protected $secret;
     protected $redirectUri;
     protected $accessToken;
+    protected $scopes;
+    private $urlAuth = 'https://accounts.google.com/o/oauth2/auth';
+    private $urlToken = 'https://accounts.google.com/o/oauth2/token';
 
     public function __construct($clientId, $secret) {
         $this->clientId = $clientId;
@@ -33,21 +36,36 @@ class GoogleClient {
         return $this;
     }
 
-    public function getRedirectLink($uriAuth) {
+    public function setScopes(array $scopes) {
+        $this->scopes = $scopes;
+    }
+
+    public function getRedirectLink() {
         $data = http_build_query(array(
-            'scope' => 'https://www.googleapis.com/auth/drive',
+            'scope' => implode(' ', $this->scopes),
             'state' => 'drive_access',
-            'redirect_uri' => 'http://leandroleite.info/googleDrive',
+            'redirect_uri' => 'http://leandroleite.info/googleGetRefreshToken',
             'response_type' => 'code',
             'client_id' => $this->clientId,
             'access_type' => 'offline',
             'approval_prompt' => 'force'
         ));
         $curl = new CurlService();
-        return $curl->get("{$uriAuth}?{$data}")->fetch();
+        return $curl->get("{$this->urlAuth}?{$data}")->fetch();
     }
 
-    public function getAccessToken($tokenUri, $code) {
+    public function getAccessToken($refreshToken) {
+        $data = array(
+            'client_id' => $this->clientId,
+            'client_secret' => $this->secret,
+            'refresh_token' => $refreshToken,
+            'grant_type' => 'refresh_token'
+        );
+        $curl = new CurlService();
+        return json_decode($curl->formPost($this->urlToken, $data)->fetch());
+    }
+
+    public function getRefreshToken($code) {
         $data = array(
             'code' => $code,
             'client_id' => $this->clientId,
@@ -56,15 +74,18 @@ class GoogleClient {
             'grant_type' => 'authorization_code'
         );
         $curl = new CurlService();
-        return json_decode($curl->formPost($tokenUri, $data)->fetch());
+        return json_decode($curl->formPost($this->urlToken, $data)->fetch());
     }
 
     public function searchFiles(array $parameters) {
-        $query = urlencode(implode('&', $parameters));
-        $url = "https://www.googleapis.com/drive/v2/files/?q={$query}";
+        $url = "https://www.googleapis.com/drive/v2/files/";
+        if (count($parameters)) {
+            $query = urlencode(implode('&', $parameters));
+            $url .= "?q={$query}";
+        }
         $curl = new CurlService();
         $curl->setHeaders(array('Authorization' => "Bearer {$this->accessToken}"));
-        return $curl->get($url)->fetch();
+        return json_decode($curl->get($url)->fetch());
     }
 
 }

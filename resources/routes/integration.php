@@ -104,36 +104,63 @@ $router->get('/githubrepo/article/*', function($articleName) {
 
 $router->get('/googleDrive', function() {
             @session_start();
-            $_SESSION['refresh_token'] = Locator::get(':integrations:google:refresh_token');
+
             $info = Locator::get(':integrations:google:info');
             $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
             $googleClient->setRedirectUri($info->redirect_uri);
+            $googleClient->setScopes((array) $info->scopes);
 
-            if (!isset($_GET['code'])) {
-                $uriAuth = $info->auth_uri;
-                echo $googleClient->getRedirectLink($uriAuth);
+            if (isset($_GET['code'])) {
+                $return = $googleClient->getRefreshToken($_GET['code']);
+                var_dump($return);
                 exit;
             }
-
-            $tokenUri = $info->token_uri;
-            $result = $googleClient->getAccessToken($tokenUri, $_GET['code']);
-            if (isset($result->error))
-                throw new Exception('error' . print_r($result, 3));
-
-            if (isset($result->access_token)) {
-                ;
-            }
+            echo $googleClient->getRedirectLink();
+            exit;
         });
 
+$router->get('/googleGetRefreshToken', function() {
+            @session_start();
+
+            $info = Locator::get(':integrations:google:info');
+            $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
+            $googleClient->setRedirectUri($info->redirect_uri);
+            $googleClient->setScopes((array) $info->scopes);
+
+            if (isset($_SESSION['accessToken'])) {
+                echo 'you is already authenticated! try to access ' .
+                '<a href="/articles/find/">Here</a>';
+                exit;
+            }
+            $refreshToken = Locator::get(':integrations:google')->refresh_token;
+
+            $return = $googleClient->getAccessToken($refreshToken);
+            if (!isset($return->access_token)) {
+                var_dump($return);
+                exit;
+            }
+            echo 'oia->' . $_SESSION['accessToken'] = $return->access_token;
+            $_SESSION['tokenType'] = $return->token_type;
+
+            $uri = (isset($_GET['sendBack'])) ? $_GET['sendBack'] : $_SERVER['PHP_SELF'];
+            header("Location= '{$uri}'");
+        });
 $router->get('/articles/find/*', function() {
             @session_start();
 
-            $accessToken = Locator::get(':integrations:google')->access_token;
+            $accessToken = $_SESSION['accessToken'];
             $info = Locator::get(':integrations:google:info');
             $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
             $googleClient->setAccessToken($accessToken);
-            
+
             $parameters = array('title contains publish');
             $result = $googleClient->searchFiles($parameters);
-            var_dump($result);
+            if ($result->error->code == 403) {
+                var_dump('opa');
+                $_SESSION['accessToken'] = null;
+                unset($_SESSION['accessToken']);
+                session_destroy();
+                header('Location:/googleGetRefreshToken?sendBack=/articles/find/');
+            }
+            var_dump($result, $_SESSION);
         });

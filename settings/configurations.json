@@ -1,12 +1,11 @@
 {
     "integrations": {
         "google": {
-            "access_token": "ya29.AHES6ZTr7vaAVhG9pvVL8Il-3fQtZKqz7hQdp4CdaTiHLJQ",
             "refresh_token": "1/-y3Ot7y9MsjyOCel88zF-tVJDEG_f7ezBE5An-AtwN4",
             "info": {
                 "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
                 "client_id": "861685171956.apps.googleusercontent.com",
-                "client_secret": "Eln8Z8ZHRaH0xkmW8Tu84qt-",
+                "client_secret": "DXJtBOdP62mGynIuhAhvg62e",
                 "token_uri": "https:\/\/accounts.google.com\/o\/oauth2\/token",
                 "client_email": "861685171956@developer.gserviceaccount.com",
                 "redirect_uri": "http:\/\/leandroleite.info\/googleDrive",
@@ -15,7 +14,11 @@
                 "javascript_origins": [
                     "http:\/\/leandroleite.info"
                 ],
-                "scopes": ["https:\/\/www.googleapis.com\/auth\/drive"]
+                "scopes": [
+                    "https:\/\/www.googleapis.com\/auth\/drive",
+                    "https:\/\/www.googleapis.com\/auth\/drive.readonly",
+                    "https:\/\/www.googleapis.com\/auth\/drive.readonly.metadata"
+                ]
             }
         }
     }
