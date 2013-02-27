@@ -110,24 +110,15 @@ $router->get('/googleDrive', function() {
             $googleClient->setRedirectUri($info->redirect_uri);
             $googleClient->setScopes((array) $info->scopes);
 
-            if (!isset($_GET['code'])) {
-                echo $googleClient->getRedirectLink();
-                exit;
-            }
-            $return = $googleClient->getRefreshToken($_GET['code']);
-            $_SESSION['accessToken'] = $return->access_token;
-            $_SESSION['tokenType'] = $return->token_type;
-            error_log("segue ai o refresh_token={$return->refresh_token} ");
-            exit;
-        });
-
-$router->get('/googleGetRefreshToken', function() {
-            @session_start();
-
-            $info = Locator::get(':integrations:google:info');
-            $googleClient = new \GoogleAPIClient\GoogleClient($info->client_id, $info->client_secret);
-            $googleClient->setRedirectUri($info->redirect_uri);
-            $googleClient->setScopes((array) $info->scopes);
+//            if (!isset($_GET['code'])) {
+//                echo $googleClient->getRedirectLink();
+//                exit;
+//            }
+//            $return = $googleClient->getRefreshToken($_GET['code']);
+//            $_SESSION['accessToken'] = $return->access_token;
+//            $_SESSION['tokenType'] = $return->token_type;
+//            error_log("segue ai o refresh_token={$return->refresh_token} ");
+//            exit;
 
             if (isset($_SESSION['accessToken'])) {
                 echo 'you is already authenticated! try to access ' .
@@ -147,6 +138,7 @@ $router->get('/googleGetRefreshToken', function() {
             $uri = (isset($_GET['sendBack'])) ? $_GET['sendBack'] : $_SERVER['PHP_SELF'];
             header("Location= '{$uri}'");
         });
+
 $router->get('/articles/find/*', function() {
             @session_start();
 
