@@ -66,10 +66,12 @@ class GoogleClient implements Integrable {
     }
 
     public function getAccessToken() {
-        $accessToken = $_SESSION['accessToken'];
-        if ($this->accessTokenIsValid($accessToken)) {
-            return $this->accessToken = $accessToken;
-        }
+        if (isset($_SESSION['accessToken']))
+            $this->accessToken = $_SESSION['accessToken'];
+
+        if ($this->accessTokenIsValid($this->accessToken))
+            return $this->accessToken;
+
         $data = array(
             'client_id' => $this->clientId,
             'client_secret' => $this->secret,
