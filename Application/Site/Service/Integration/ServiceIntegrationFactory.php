@@ -20,7 +20,7 @@ class ServiceIntegrationFactory {
      * @param \stdClass $info
      * @return \Service\Integration\Integretable|false
      */
-    public function makeService($IntegrationClassType, $info) {
+    public static function makeService($IntegrationClassType, $info) {
         switch ($IntegrationClassType) {
             case 'google':
                 return new GoogleClient(new CurlService(), $info);
