@@ -1,4 +1,4 @@
-<?php use Site\Service\View; ?>
+<?php use Service\View; ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="style/site.css">
         <link rel="stylesheet" href="style/theme/spacelab/bootstrap.min.css">
         <!--[if lt IE 9]><link rel=stylesheet href=css/ie.css><![endif]-->
-        <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+        <script src="script/jquery-1.9.1.min.js"></script>
         <script src="script/bootstrap.min.js"></script>
     </head>
     <body>

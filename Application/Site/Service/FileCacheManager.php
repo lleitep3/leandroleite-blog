@@ -1,13 +1,15 @@
 <?php
 
-namespace Site\Service;
+namespace Service;
+
+use Service\Integration\CacheMaker;
 
 /**
  * Description of FileCacheManager
  *
  * @author leandro <leandro@leandroleite.info>
  */
-class FileCacheManager {
+class FileCacheManager implements CacheMaker {
 
     protected $folderCache;
 
@@ -30,8 +32,7 @@ class FileCacheManager {
      * @param string $content
      * @return boolean
      */
-    public function updateFileCache($filePath, $content) {
-        $fullPath = $this->getFullPath($filePath);
+    public function updateFileCache($fullPath, $content) {
         return (bool) file_put_contents($fullPath, $content);
     }
 
@@ -41,7 +42,7 @@ class FileCacheManager {
      * @return string
      */
     public function fetchFileCache($filePath) {
-        return file_get_contents($this->getFullPath($filePath));
+        return file_get_contents($filePath);
     }
 
     /**
@@ -56,12 +57,30 @@ class FileCacheManager {
                 , $this->folderCache . DIRECTORY_SEPARATOR . $filePath
         );
 
-        if (!file_exists($path)) {
+        if (!file_exists($path))
             touch($path);
-        }
+
         chmod($path, 0666);
 
         return $path;
+    }
+
+    /**
+     * 
+     * @param string $key
+     * @return string content cached
+     */
+    public function getCache($key) {
+        $key = str_replace(DIRECTORY_SEPARATOR, '_', $key);
+        return json_decode($this->fetchFileCache($this->getFullPath($key)));
+    }
+
+    public function makeCache($key, $content) {
+        $key = str_replace(DIRECTORY_SEPARATOR, '_', $key);
+        if (!is_string($content)) {
+            $content = json_encode($content);
+        }
+        return $this->updateFileCache($this->getFullPath($key), $content);
     }
 
 }

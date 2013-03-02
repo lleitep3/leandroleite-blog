@@ -1,6 +1,6 @@
 <?php
 
-namespace Site\Service;
+namespace Service;
 
 /**
  * Description of CurlService

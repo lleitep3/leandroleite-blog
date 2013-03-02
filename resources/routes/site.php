@@ -1,6 +1,6 @@
 <?php
 
-use Site\Service\View;
+use Service\View;
 
 $router->get('/', function() {
             View::set('page', 'institucional_home');

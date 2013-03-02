@@ -9,7 +9,7 @@
 <script src="/script/githubAPIRender.js"></script>
 <script type="text/javascript">
     $(function(){
-        $.get('/githubrepos',function(data){
+        $.get('/api/v1/integration/github',function(data){
             var github = new githubRepos(data);
             var render = new githubAPIRender();
             var repos = github.getRepositories();

@@ -14,7 +14,7 @@
 <script type="text/javascript">
     $(function(){
         // making LinkedIn Integration to populate personal information
-        $.get('/linkedin',function(data){
+        $.get('/api/v1/integration/linkedin',function(data){
             var $boxInfo = $('.boxInformation');
             var linkedIn = new linkedInNavigator(data);
             

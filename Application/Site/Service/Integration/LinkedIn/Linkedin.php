@@ -1,12 +1,15 @@
 <?php
 
-namespace Site\Service\Integration;
+namespace Service\Integration\LinkedIn;
+
+use Service\Integration\Integrable;
+use Service\Integration\Exceptions\IntegrationException;
 
 /**
  *
  * @author leandro <leandro@leandroleite.info>
  */
-class Linkedin {
+class Linkedin implements Integrable {
 
     protected $conn;
     protected $urlApi;
@@ -16,8 +19,10 @@ class Linkedin {
     protected $resources;
     protected $params;
 
-    public function __construct($appKey, $appSecret) {
-        $this->setApplication($appKey, $appSecret);
+    public function __construct($info) {
+        $this->setApplication($info->clientId, $info->clientSecret);
+        $this->setResources((array) $info->scopes);
+        $this->setUserToken($info->userToken, $info->userSecret);
         $this->loadDefaultConfigs();
         $this->loadConfigs();
     }
@@ -83,7 +88,6 @@ class Linkedin {
         } catch (\OAuthException $E) {
             return urldecode($E->lastResponse);
         }
-        header('Content-type:application/json');
         return $this->conn->getLastResponse();
     }
 
@@ -93,6 +97,14 @@ class Linkedin {
 
     public function getQueryParams() {
         return '?' . http_build_query($this->params);
+    }
+
+    public function callService(array $args) {
+        $jsonObject = json_decode($this->get());
+        if (isset($jsonObject->status) && $jsonObject->status != 200) {
+            throw new IntegrationException(print_r($jsonObject,3));
+        }
+        return $jsonObject;
     }
 
 }
