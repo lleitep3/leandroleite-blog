@@ -27,8 +27,14 @@
                     "articles": {
                         "service": "https:\/\/www.googleapis.com\/drive\/v2\/files\/",
                         "filter": {
-                            "q" : "\"0BwlRgaTPDz2KQkU0MjRDZkJUSS1xd0xBVlZ0aXdCUQ\" in parents and title contains '#publish'",
-                                    "fields":"items(id,title,createdDate,modifiedDate,exportLinks,owners(displayName,picture/url))"
+                            "q": "\"0BwlRgaTPDz2KQkU0MjRDZkJUSS1xd0xBVlZ0aXdCUQ\" in parents and title contains '#publish'",
+                            "fields": "items(id,title,createdDate,modifiedDate,exportLinks,owners(displayName,picture/url))"
+                        }
+                    },
+                    "article": {
+                        "service": "https:\/\/www.googleapis.com\/drive\/v2\/files\/#arg0",
+                        "filter": {
+                            "fields": "createdDate,exportLinks,iconLink,id,modifiedDate,owners(displayName,picture),thumbnail/image,title,webContentLink,webViewLink"
                         }
                     }
                 }

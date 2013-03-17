@@ -1,14 +1,16 @@
-<?php use Service\View; ?>
+<?php
+
+ use Service\View; ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <!--[if lt IE 9]><script src=http://html5shiv.googlecode.com/svn/trunk/html5.js></script><![endif]-->
-        <link rel="stylesheet" href="style/site.css">
-        <link rel="stylesheet" href="style/theme/spacelab/bootstrap.min.css">
+        <link rel="stylesheet" href="/style/site.css">
+        <link rel="stylesheet" href="/style/theme/spacelab/bootstrap.min.css">
         <!--[if lt IE 9]><link rel=stylesheet href=css/ie.css><![endif]-->
-        <script src="script/jquery-1.9.1.min.js"></script>
-        <script src="script/bootstrap.min.js"></script>
+        <script src="/script/jquery-1.9.1.min.js"></script>
+        <script src="/script/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -78,7 +80,7 @@
         </div>
         <script type="text/javascript">
             var uri = window.location.pathname;
-            $('.menuInstitucional a[href="' + uri + '"]')
+            $('body').find('a[href="' + uri + '"]')
                     .parent('li').addClass('active');
         </script>
     </body>

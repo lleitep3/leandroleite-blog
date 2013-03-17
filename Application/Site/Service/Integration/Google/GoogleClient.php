@@ -4,6 +4,7 @@ namespace Service\Integration\Google;
 
 use Service\CurlService;
 use Service\Integration\Integrable;
+use Service\Integration\Exceptions\IntegrationException;
 
 /**
  * Description of GoogleServerRuequest
@@ -15,6 +16,7 @@ class GoogleClient implements Integrable {
     protected $curl;
     protected $clientId;
     protected $secret;
+    protected $services;
     protected $redirectUri;
     protected $accessToken;
     protected $refreshToken;
@@ -82,7 +84,7 @@ class GoogleClient implements Integrable {
 
         if (isset($return->error)) {
             error_log(print_r($return, 3));
-            return false;
+            throw new IntegrationException(print_r($return, 3));
         }
 
         $this->setAccessToken($return->access_token);
@@ -106,13 +108,23 @@ class GoogleClient implements Integrable {
         return (isset($return->error)) ? false : true;
     }
 
-    protected function getService($service) {
-        if (!array_key_exists($service, $this->services)) {
+    protected function getService($service, $args) {
+        if (!array_key_exists($service, $this->services))
             return false;
-        }
-        $api = $this->services[$service]->service;
+
+        array_shift($args);
+        $mapperArgs = array();
+
+        foreach ($args as $key => $arg)
+            $mapperArgs["#arg{$key}"] = $arg;
+
+        $api = str_replace(
+                array_keys($mapperArgs)
+                , array_values($mapperArgs)
+                , $this->services[$service]->service
+        );
         $param = (array) $this->services[$service]->filter;
-        $param = array_merge($param, array('access_token' => $this->accessToken));
+        $param['access_token'] = $this->accessToken;
         $query = http_build_query($param);
         return "{$api}?{$query}";
     }
@@ -120,14 +132,47 @@ class GoogleClient implements Integrable {
     public function callService(array $args) {
         $service = (count($args)) ? current($args) : 'articles';
         $this->getAccessToken();
-        $url = $this->getService($service);
+        $url = $this->getService($service, $args);
         $return = json_decode($this->curl->get($url)->fetch());
 
         if (isset($return->error)) {
             error_log(print_r($return, 3));
-            return false;
+            throw new IntegrationException(print_r($return, 3));
         }
-        return $return->items;
+        return $this->formatBeforeSend($service, $return);
+    }
+
+    protected function formatBeforeSend($service, $return) {
+        $data = new \stdClass();
+        switch ($service) {
+            case 'articles':
+                $items = array();
+                foreach ($return->items as $item) {
+                    $obj = new \stdClass;
+                    $obj->id = $item->id;
+                    $obj->title = trim(str_replace('#publish', '', $item->title));
+                    $obj->modifiedDate = $item->modifiedDate;
+                    $obj->createdDate = $item->createdDate;
+                    $obj->owners = $item->owners;
+                    $items[] = $obj;
+                }
+                $data = $items;
+                break;
+            case 'article':
+                $return = (array) $return;
+                $data->title = trim(str_replace('#publish', '', $return['title']));
+                $data->createdDate = $return['createdDate'];
+                $data->modifiedDate = $return['modifiedDate'];
+                $data->iconLink = $return['iconLink'];
+                $data->owners = $return['owners'];
+                $arr = (array) $return['exportLinks'];
+                $url = $arr['text/html'] . '&access_token=' . $this->accessToken;
+                $data->content = file_get_contents($url);
+                break;
+            default :
+                $data = $return;
+        }
+        return $data;
     }
 
 }

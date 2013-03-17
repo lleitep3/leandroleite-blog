@@ -17,6 +17,11 @@ $router->get('/artigos', function() {
             View::render();
         });
 
+$router->get('/artigos/*', function() {
+            View::set('page', 'institucional_artigo');
+            View::render();
+        });
+
 $router->get('/projetos', function() {
             View::set('page', 'institucional_projetos');
             View::render();

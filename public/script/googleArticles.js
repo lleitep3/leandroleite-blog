@@ -30,17 +30,17 @@ function googleArticles(data) {
         html += '<p><small>Modificado em : ' + modified + '</small></p>';
         return '<div class="boxArtigosPequeno">' +
                 '<hr>' +
-                '<h3>' + article.title.replace('#publish', '') + '</h3>' +
-                '<p>' +
-                ' Descrição de: ' + article.title +
-                '</p>' +
-                '<p>' +
-                '<small><b>Tags: </b>' +
-                '<span class="badge badge-info">teste</span>' +
-                '<span class="badge badge-info">teste</span>' +
-                '<span class="badge badge-info">teste</span>' +
-                '</small>' +
-                '</p>' +
+                '<h3><a href="/artigos/'+article.id+'">' + article.title + '</a></h3>' +
+//                '<p>' +
+//                ' Descrição de: ' + article.title +
+//                '</p>' +
+//                '<p>' +
+//                '<small><b>Tags: </b>' +
+//                '<span class="badge badge-info">teste</span>' +
+//                '<span class="badge badge-info">teste</span>' +
+//                '<span class="badge badge-info">teste</span>' +
+//                '</small>' +
+//                '</p>' +
                 html +
                 '</div>';
     }
