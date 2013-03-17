@@ -8,33 +8,35 @@
     </div>
 </div>
 <div class="row-fluid boxInformation">
+    <img src="/image/loading1.gif">
 </div><!--/span-->
 
 <script src="/script/linkedInNavigator.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function() {
         // making LinkedIn Integration to populate personal information
-        $.get('/api/v1/integration/linkedin',function(data){
+        $.get('/api/v1/integration/linkedin', function(data) {
             var $boxInfo = $('.boxInformation');
+            $boxInfo.html('');
             var linkedIn = new linkedInNavigator(data);
-            
+
             // making current position html
             $boxInfo.append(
-            linkedIn.makeHtmlBasicInformation(linkedIn.getBasicInformation())
-        );
-            
+                    linkedIn.makeHtmlBasicInformation(linkedIn.getBasicInformation())
+                    );
+
             // making current position html
             $boxInfo.append(
-            linkedIn.makeHtmlCurrentPosition(linkedIn.getCurrentPositions())
-        );
+                    linkedIn.makeHtmlCurrentPosition(linkedIn.getCurrentPositions())
+                    );
             // making past position html
             $boxInfo.append(
-            linkedIn.makeHtmlPastPosition(linkedIn.getPastPositions())
-        );
+                    linkedIn.makeHtmlPastPosition(linkedIn.getPastPositions())
+                    );
             // making skills html
             $boxInfo.append(
-            linkedIn.makeHtmlSkills(linkedIn.getSkills())
-        );
-        },'json');
+                    linkedIn.makeHtmlSkills(linkedIn.getSkills())
+                    );
+        }, 'json');
     });
 </script>

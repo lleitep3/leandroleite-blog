@@ -2,6 +2,7 @@
     <h1>Meus Projetos</h1>
     <div class="row-fluid span11">
         <div class="span11 boxRepositories">
+            <img src="/image/loading1.gif">
         </div><!--/span-->
     </div><!--/span-->
 </div><!--/span-->
@@ -14,6 +15,7 @@
             var render = new githubAPIRender();
             var repos = github.getRepositories();
             var $boxRepositories = $('.boxRepositories');
+            $boxRepositories.html('');
             for(var k in repos){
                 $boxRepositories.append(render.reposRender(repos[k]));
             }

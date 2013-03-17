@@ -57,12 +57,11 @@
                 </div>
                 <div class="span3">
                     <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
+                        <ul class="nav nav-list articlesLinks">
                             <li class="nav-header">Artigos</li>
-                            <li class="active"><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
+                            <li><img src="/image/loading1.gif"></li>
+                        </ul>
+                        <ul class="nav nav-list">
                             <li class="nav-header">Indico a Leitura</li>
                             <li><a href="#">Link</a></li>
                             <li><a href="#">Link</a></li>
@@ -79,9 +78,19 @@
 
         </div>
         <script type="text/javascript">
-            var uri = window.location.pathname;
-            $('body').find('a[href="' + uri + '"]')
-                    .parent('li').addClass('active');
+            $(function() {
+                $.get('/api/v1/integration/google', function(r) {
+                    $('.articlesLinks').html('<li class="nav-header">Artigos</li>');
+                    for (var k in r) {
+                        var item = r[k];
+                        var li = '<li><a href="/artigos/' + item.id + '">' + item.title + '</li>';
+                        $('.articlesLinks').append(li);
+                    }
+                    var uri = window.location.pathname;
+                    $('body').find('a[href="' + uri + '"]')
+                            .parent('li').addClass('active');
+                });
+            });
         </script>
     </body>
 </hrml>
