@@ -76,6 +76,6 @@
         }
     },
     "cache": {
-        "path": "\/home\/leandro\/projects\/leandroleite\/resources\/cache\/"
+        "path": "\/var\/www\/leandroleite\/resources\/cache\/"
     }
 }
