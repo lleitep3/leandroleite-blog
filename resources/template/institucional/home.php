@@ -9,43 +9,20 @@
         <p><a class="btn btn-primary btn-large" href="/leandroleite">Saiba mais do mesmo? &raquo;</a></p>
     </div>
 </div>
-<div class="row-fluid">
-    <div class="span4">
-        <h2>Ultimos Artigos</h2>
+<div class="span11">
+    <h1>Últimos Artigos</h1>
+    <div class="row-fluid">
+        <div id="articlesContainer" class="span11">
+            <img src="/image/loading1.gif">
+        </div>
     </div><!--/span-->
 </div><!--/span-->
-
-<div class="row-fluid">
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-</div><!--/row-->
-<div class="row-fluid">
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-    <div class="span4">
-        <h3>Heading</h3>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div><!--/span-->
-</div><!--/row-->
+<script src="/script/googleArticles.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $.get('/api/v1/integration/google', function(data) {
+            var googleArticlesObject = new googleArticles(data);
+            $('#articlesContainer').html(googleArticlesObject.getRender());
+        }, 'json');
+    });
+</script>
