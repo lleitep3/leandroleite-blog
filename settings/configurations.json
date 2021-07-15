@@ -2,14 +2,14 @@
     "integrations": {
         "google": {
             "info": {
-                "refresh_token": "1/Sp0do2QGHo4aREI9Q_MwfLPYtSdHaIOK8ig3UmsrSq0",
+                "refresh_token": "",
                 "auth_uri": "https:\/\/accounts.google.com\/o\/oauth2\/auth",
                 "token_uri": "https:\/\/accounts.google.com\/o\/oauth2\/token",
                 "token_info_uri": "https:\/\/www.googleapis.com\/oauth2\/v1\/tokeninfo",
                 "redirect_uri": "http:\/\/leandroleite.info\/googleDrive",
-                "client_id": "70328910202.apps.googleusercontent.com",
-                "client_secret": "buGC1sGgVHdOeHvRtFZInQd4",
-                "client_email": "70328910202@developer.gserviceaccount.com",
+                "client_id": "",
+                "client_secret": "",
+                "client_email": "",
                 "client_x509_cert_url": "https:\/\/www.googleapis.com\/robot\/v1\/metadata\/x509\/861685171956@developer.gserviceaccount.com",
                 "auth_provider_x509_cert_url": "https:\/\/www.googleapis.com\/oauth2\/v1\/certs",
                 "javascript_origins": [
@@ -42,10 +42,10 @@
         },
         "linkedin": {
             "info": {
-                "clientId": "vj3oxvlgfpni",
-                "clientSecret": "zVpY54LtLH0cTuYr",
-                "userToken": "9bc87eee-b75c-4dd2-ac49-433fb8672bce",
-                "userSecret": "55b2f2a0-2719-4b6b-aa44-ad7700be0e6e",
+                "clientId": "",
+                "clientSecret": "",
+                "userToken": "",
+                "userSecret": "",
                 "scopes": [
                     "email-address",
                     "skills",
